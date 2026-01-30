@@ -90,7 +90,7 @@ async def get_feed(session: AsyncSession = Depends(get_async_session), user : Us
 
     return {"posts" : posts_data}
 
-@app.delete("/post/{post_id}", tags=["posts"])
+@app.delete("/posts/{post_id}", tags=["posts"])
 async def delete_post(post_id: str,session: AsyncSession = Depends(get_async_session), user : User = Depends(current_active_user)):
     try:
         post_id = uuid.UUID(post_id)
