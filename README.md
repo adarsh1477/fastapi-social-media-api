@@ -48,7 +48,6 @@ Simple Social solves these problems using a **CDN-first architecture**, **JWT au
 4. Feed data is served via protected APIs.
 5. Streamlit frontend consumes APIs and renders media dynamically.
 
-_**(Attach architecture diagram here)**_
 
 ---
 
@@ -170,3 +169,4 @@ Frontend renders media using correct component (`image` / `video`).
 
 ## 👨‍💻 Author
 Built with ❤️ by **Adarsh Rai**
+
