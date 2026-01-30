@@ -1,0 +1,44 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# ===== Virtual Environments =====
+.venv/
+venv/
+ENV/
+env/
+
+# ===== Environment Variables =====
+.env
+
+# ===== Databases =====
+*.db
+*.sqlite3
+
+# ===== Logs =====
+*.log
+
+# ===== OS / Editor Noise =====
+.DS_Store
+Thumbs.db
+
+# ===== VS Code =====
+.vscode/
+
+# ===== Test / Cache =====
+.pytest_cache/
+.mypy_cache/
+
+# ===== Streamlit =====
+.streamlit/
+
+# ===== UV / Lock files (optional) =====
+uv.lock
+
+# ===== FastAPI / Runtime =====
+*.pid
