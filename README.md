@@ -115,6 +115,7 @@ Simple Social solves these problems using a **CDN-first architecture**, **JWT au
 | GET | `/users/me` | Get current user |
 | POST | `/upload` | Upload image/video |
 | GET | `/feed` | Fetch feed posts |
+| PUT | `/posts/{post_id}/caption` | update media caption|
 | DELETE | `/post/{post_id}` | Delete user’s post |
 
 ---
@@ -169,4 +170,5 @@ Frontend renders media using correct component (`image` / `video`).
 
 ## 👨‍💻 Author
 Built with ❤️ by **Adarsh Rai**
+
 
