@@ -11,25 +11,25 @@ JWT-based authentication using FastAPI Users
 
 Secure login, signup, password reset, and email verification
 
-Protected routes with current active user dependency
+Protected routes using current_active_user
 
 Authorization checks (users can delete only their own posts)
 
 📤 Media Upload (ImageKit Integration)
 
-Upload images & videos via API
+Upload images & videos via FastAPI
 
-Files stored on ImageKit CDN (no local media storage)
+Files stored on ImageKit CDN (no local storage)
 
-Automatic media type detection (image vs video)
+Automatic media-type detection (image vs video)
 
-Optimized delivery through ImageKit URLs
+Optimized delivery using ImageKit URLs
 
-Supports large files without blocking the server
+Supports large uploads without blocking the server
 
 📰 Feed System
 
-Chronological feed ordered by creation time
+Chronological feed ordered by creation date
 
 Displays:
 
@@ -39,11 +39,11 @@ Caption
 
 Author email
 
-Creation date
+Timestamp
 
 Ownership awareness (is_owner)
 
-Real-time delete support for post owners
+Secure delete support for post owners
 
 🎨 Frontend (Streamlit)
 
@@ -51,7 +51,7 @@ Clean, responsive UI
 
 JWT-aware session handling
 
-Media rendering based on file type:
+Media rendering by file type:
 
 st.image() for images
 
@@ -61,21 +61,21 @@ ImageKit on-the-fly transformations
 
 Caption overlays
 
-Uniform sizing
+Uniform sizing & padding
 
 Sidebar navigation (Feed / Upload / Logout)
 
 🗄️ Database & Backend
 
-Async SQLAlchemy with SQLite (easy to swap to Postgres)
+Async SQLAlchemy with SQLite (easily swappable to Postgres)
 
-Proper relational models:
+Relational models:
 
 User
 
 Post (linked via user_id)
 
-Automatic DB initialization on app startup
+Automatic DB initialization on startup
 
 Clean separation of concerns (auth, media, feed)
 
@@ -90,23 +90,24 @@ HTTP Client	Requests
 Runtime	Python 3.13
 📁 Project Structure
 app/
-├── app.py            # Main FastAPI app
+├── app.py            # Main FastAPI application
 ├── db.py             # Database models & session
 ├── images.py         # ImageKit client setup
-├── users.py          # Auth & user logic
+├── users.py          # Authentication logic
 ├── schemas.py        # Pydantic schemas
+
 frontend/
 ├── streamlit_app.py  # Streamlit UI
 
 🔑 Environment Variables
 
-Create a .env file:
+Create a .env file in the project root:
 
 IMAGEKIT_PUBLIC_KEY=your_public_key
 IMAGEKIT_PRIVATE_KEY=your_private_key
 IMAGEKIT_URL=https://ik.imagekit.io/your_id
 
-SECRET=jwt_secret_key
+SECRET=your_jwt_secret
 
 ▶️ Running the App
 Backend
@@ -117,17 +118,17 @@ streamlit run frontend/streamlit_app.py
 
 🧠 Design Highlights
 
-No media stored on server → scalable by default
+No server-side media storage → CDN-first architecture
 
-Async everywhere → non-blocking uploads & queries
+Fully async backend → high performance
 
-JWT-protected API → secure by design
+JWT-protected API → secure access
 
-CDN-backed delivery → fast media loading
+Optimized media delivery via ImageKit
 
-Clear ownership model → safe deletes
+Ownership-aware operations → safe deletes
 
-Extensible architecture → ready for likes, comments, follows
+Extensible design → ready for future features
 
 📌 Future Enhancements
 
@@ -135,13 +136,11 @@ Likes & comments
 
 Pagination / infinite scroll
 
-Post reactions
-
 User profiles
 
 Cloud database (PostgreSQL)
 
-Caching & rate limiting
+Rate limiting & caching
 
 👨‍💻 Author
 
