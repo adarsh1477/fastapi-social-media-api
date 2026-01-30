@@ -112,3 +112,28 @@ async def delete_post(post_id: str,session: AsyncSession = Depends(get_async_ses
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+
+@app.put("/posts/{post_id}/caption", tags=["posts"])
+async def update_caption(post_id: str, caption: str = Form(...), session: AsyncSession = Depends(get_async_session), user : User = Depends(current_active_user)):
+    try:    
+        post_uuid = uuid.UUID(post_id)
+        output = await session.execute(select(Post).where(Post.id == post_uuid))
+        post = output.scalars().first()
+
+        if not post:
+            raise HTTPException(status_code=402,detail="post not found")
+    
+        
+        if post.user_id != user.id:
+            raise HTTPException(status_code=403, detail="Not authorized to delete this post")
+        
+        post.caption = caption
+        await session.commit()
+
+        return post
+
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
