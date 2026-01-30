@@ -1,147 +1,172 @@
-📸 Simple Social — Media Sharing Platform
+# 📸 Simple Social — Media Sharing Platform
 
-A full-stack media sharing application built with FastAPI, Streamlit, JWT authentication, and ImageKit for scalable media storage and delivery.
+_A full-stack social media application built with FastAPI, Streamlit, JWT authentication, ImageKit CDN integration, and an async database architecture._
 
-Users can register, authenticate, upload images/videos, and view a personalized feed — all backed by an async database and modern API design.
+---
 
-🚀 Features
-🔐 Authentication & Authorization
+## 👥 Project Info
+**Personal Full-Stack Project**  
+**Developer:** Adarsh Rai
 
-JWT-based authentication using FastAPI Users
+---
 
-Secure login, signup, password reset, and email verification
+## 📋 Table of Contents
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Architecture](#architecture)
+- [Key Technologies](#key-technologies)
+- [Core Features](#core-features)
+- [API Endpoints](#api-endpoints)
+- [How it Works](#how-it-works)
+- [Security](#security)
+- [Results](#results)
+- [Future Enhancements](#future-enhancements)
 
-Protected routes using current_active_user
+---
 
-Authorization checks (users can delete only their own posts)
+## 📝 Overview
+Simple Social is a cloud-ready media sharing platform that allows authenticated users to upload images and videos, view a personalized feed, and manage their own posts.  
+The system uses **ImageKit** for scalable media storage and delivery, **JWT-based authentication**, and a **fully async backend** for high performance.
 
-📤 Media Upload (ImageKit Integration)
+---
 
-Upload images & videos via FastAPI
+## 🎯 Problem Statement
+Traditional social media prototypes often:
+- Store media locally (poor scalability)
+- Lack proper authentication and authorization
+- Block servers during large uploads
+- Mix frontend and backend responsibilities
 
-Files stored on ImageKit CDN (no local storage)
+Simple Social solves these problems using a **CDN-first architecture**, **JWT auth**, and **async microservice-style APIs**.
 
-Automatic media-type detection (image vs video)
+---
 
-Optimized delivery using ImageKit URLs
+## 🏛️ Architecture
+1. User authenticates via JWT (FastAPI Users).
+2. Media is uploaded via FastAPI and streamed to ImageKit.
+3. Media metadata is stored in the database.
+4. Feed data is served via protected APIs.
+5. Streamlit frontend consumes APIs and renders media dynamically.
 
-Supports large uploads without blocking the server
+_**(Attach architecture diagram here)**_
 
-📰 Feed System
+---
 
-Chronological feed ordered by creation date
+## 🛠️ Key Technologies
+- **FastAPI** — Async backend & REST APIs  
+- **FastAPI Users** — JWT authentication & user management  
+- **ImageKit** — Media CDN, storage & transformations  
+- **Streamlit** — Frontend UI  
+- **SQLAlchemy (Async)** — Database ORM  
+- **SQLite** — Development database (Postgres-ready)  
+- **JWT** — Secure API access  
 
-Displays:
+---
 
-Media (image / video)
+## ✨ Core Features
 
-Caption
+### 🔐 Authentication & Authorization
+- JWT-based login & registration
+- Password reset & email verification
+- Protected routes with `current_active_user`
+- Ownership-based access control (delete only your posts)
 
-Author email
+---
 
-Timestamp
+### 📤 Media Upload (ImageKit Integration)
+- Supports **images & videos**
+- No local media storage
+- Automatic file-type detection
+- CDN-optimized delivery via ImageKit URLs
+- Handles large files efficiently
 
-Ownership awareness (is_owner)
+---
 
-Secure delete support for post owners
+### 📰 Feed System
+- Chronological feed (latest first)
+- Displays:
+  - Media (image / video)
+  - Caption
+  - Author email
+  - Timestamp
+- Ownership flag (`is_owner`)
+- Secure delete functionality
 
-🎨 Frontend (Streamlit)
+---
 
-Clean, responsive UI
+### 🎨 Frontend (Streamlit)
+- Clean, responsive UI
+- JWT-aware session handling
+- Media rendering by type:
+  - `st.image()` for images
+  - `st.video()` for videos
+- ImageKit transformations:
+  - Caption overlays
+  - Uniform sizing
+- Sidebar navigation (Feed / Upload / Logout)
 
-JWT-aware session handling
+---
 
-Media rendering by file type:
+## 🌐 API Endpoints
 
-st.image() for images
+| Method | Endpoint | Purpose |
+|------|---------|--------|
+| POST | `/auth/jwt/login` | Login & obtain JWT |
+| POST | `/auth/register` | User registration |
+| GET | `/users/me` | Get current user |
+| POST | `/upload` | Upload image/video |
+| GET | `/feed` | Fetch feed posts |
+| DELETE | `/post/{post_id}` | Delete user’s post |
 
-st.video() for videos
+---
 
-ImageKit on-the-fly transformations
+## 🔎 How it Works
 
-Caption overlays
+**1️⃣ Authentication**  
+User logs in → receives JWT → stored in frontend session.
 
-Uniform sizing & padding
+**2️⃣ Upload Media**  
+Frontend sends multipart upload → FastAPI streams file → ImageKit stores media.
 
-Sidebar navigation (Feed / Upload / Logout)
+**3️⃣ Save Metadata**  
+Post metadata (URL, caption, user_id) saved to DB.
 
-🗄️ Database & Backend
+**4️⃣ Feed Retrieval**  
+Backend joins posts + users → returns enriched feed.
 
-Async SQLAlchemy with SQLite (easily swappable to Postgres)
+**5️⃣ Media Rendering**  
+Frontend renders media using correct component (`image` / `video`).
 
-Relational models:
+---
 
-User
+## 🔐 Security
+- JWT-based protected endpoints
+- Role-aware user access
+- Ownership checks for destructive actions
+- No public write access to media storage
+- Tokens never exposed in URLs
 
-Post (linked via user_id)
+---
 
-Automatic DB initialization on startup
+## 📊 Results
+- Handles image & video uploads reliably
+- Zero server-side media storage
+- Fast media loading via CDN
+- Clean separation of frontend & backend
+- Fully async, non-blocking API design
 
-Clean separation of concerns (auth, media, feed)
+---
 
-🧱 Tech Stack
-Layer	Technology
-Backend API	FastAPI
-Auth	FastAPI Users (JWT)
-Media CDN	ImageKit
-Database	SQLite + SQLAlchemy (Async)
-Frontend	Streamlit
-HTTP Client	Requests
-Runtime	Python 3.13
-📁 Project Structure
-app/
-├── app.py            # Main FastAPI application
-├── db.py             # Database models & session
-├── images.py         # ImageKit client setup
-├── users.py          # Authentication logic
-├── schemas.py        # Pydantic schemas
+## 🚀 Future Enhancements
+- Likes & comments
+- Pagination / infinite scroll
+- User profiles
+- Cloud database (PostgreSQL)
+- Rate limiting & caching
+- Media compression presets
+- Follow / unfollow system
 
-frontend/
-├── streamlit_app.py  # Streamlit UI
+---
 
-🔑 Environment Variables
-
-Create a .env file in the project root:
-
-IMAGEKIT_PUBLIC_KEY=your_public_key
-IMAGEKIT_PRIVATE_KEY=your_private_key
-IMAGEKIT_URL=https://ik.imagekit.io/your_id
-
-SECRET=your_jwt_secret
-
-▶️ Running the App
-Backend
-uvicorn app.app:app --reload
-
-Frontend
-streamlit run frontend/streamlit_app.py
-
-🧠 Design Highlights
-
-No server-side media storage → CDN-first architecture
-
-Fully async backend → high performance
-
-JWT-protected API → secure access
-
-Optimized media delivery via ImageKit
-
-Ownership-aware operations → safe deletes
-
-Extensible design → ready for future features
-
-📌 Future Enhancements
-
-Likes & comments
-
-Pagination / infinite scroll
-
-User profiles
-
-Cloud database (PostgreSQL)
-
-Rate limiting & caching
-
-👨‍💻 Author
-
-Built with ❤️ by Adarsh Rai
+## 👨‍💻 Author
+Built with ❤️ by **Adarsh Rai**
